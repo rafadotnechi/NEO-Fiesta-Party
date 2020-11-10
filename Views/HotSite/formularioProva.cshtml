@@ -1,0 +1,103 @@
+@{
+  ViewBag.Title = "Form Prova"
+    Layout = "~/Views/Shared/Base/_Layout.cshtml";
+}
+
+<!-- ~/Views/Shared/Blocks/Banner/_FullBanner.cshtml -->
+@Html.Action("FullBanner", "Banner")
+
+<div class="ui grid middle aligned center aligned">
+  <div class="row">
+    <div class="column">
+      <form id="formMensagem" class="ui form">
+        <div class="field">
+          <label>Nome*:</label>
+          <input type="text" id="nome" name="nome" placeholder="Nome" required>
+        </div>
+        <div class="field">
+          <label>Email*:</label>
+          <input type="text" id="email" name="email" placeholder="nome@provedor.com" required>
+        </div>
+        <div class="field">
+          <label>Telefone*:</label>
+          <input type="text" id="tel" name="tel" placeholder="00 0000-0000" required>
+        </div>
+        <div class="field">
+          <label>Assunto*:</label>
+          <input type="text" id="assunto" name="assunto" placeholder="Assunto..." required>
+        </div>
+        <div class="field">
+          <label>Mensagem*:</label>
+          <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5" required></textarea>
+        </div>
+        <div>
+          <label>* Campo Obrigatório</label>
+        </div>
+        <button id="salvar" class="ui button">Salvar</button>
+        <button id="recuperar" class="ui button">Recuperar</button>
+      </form>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label>Nome</label>
+        <p id="nomeMostra">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <p id="emailMostra">
+      </div>
+      <div class="field">
+        <label>Telefone</label>
+        <p id="telMostra">
+      </div>
+      <div class="field">
+        <label>Assunto</label>
+        <p id="assuntoMostra">
+      </div>
+      <div class="field">
+        <label>Mensagem</label>
+        <p id="mensagemMostra">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('#tel').mask('(00) 0000-0000');
+
+    $('#nome').blur(function (event) {
+      setP($(this), 'nomeMostra');
+    });
+
+    $('#email').blur(function (event) {
+      if (validarEmail($(this)))
+        setP($(this), 'emailMostra');
+    });
+
+    $('#tel').blur(function (event) {
+      if (validarTel($(this)))
+        setP($(this), 'telMostra');
+    });
+
+    $('#assunto').blur(function (event) {
+      setP($(this), 'assuntoMostra');
+    });
+
+    $('#mensagem').blur(function (event) {
+      setP($(this), 'mensagemMostra');
+    });
+
+    $('#salvar').click(function (event) {
+      if (validaCampos())
+        salvarCampos();
+    });
+
+    $('#recuperar').click(function (event) {
+      recuperarCampos();
+    });
+  });
+
+
+
+</script>
