@@ -31,11 +31,8 @@ require('./modules/register');
 require('./modules/editCustomer');
 //--------------------[ Client Mascára ]--------------------//
 require('./modules/mask');
-//--------------------[ JQUERY Core ]--------------------//
 //--------------------[ DatePicker ]--------------------//
 require('./modules/jquery-ui.min');
-//--------------------[ Prova ]--------------------//
-require('../functions/provaFunctions');
 
 //--------------------[ LazyLoad ]--------------------//
 require('../functions/lazy_load');
@@ -44,7 +41,6 @@ require('../functions/lazy_load');
 
 $(document).ready(function(){
     "use strict";
-    
     setTimeout(function (){
         $(".intial-loader").fadeOut(800, function(){
             $(this).remove();

@@ -1,14 +1,13 @@
 @{
-  ViewBag.Title = "Form Prova"
-    Layout = "~/Views/Shared/Base/_Layout.cshtml";
+  ViewBag.Title = "Form Prova";
+  <script src="@Url.Content("~/static/js/provaFunctions.js")"></script>
+  Layout = "~/Views/Shared/Base/_Layout.cshtml";
 }
-
 <!-- ~/Views/Shared/Blocks/Banner/_FullBanner.cshtml -->
 @Html.Action("FullBanner", "Banner")
-
-<div class="ui grid middle aligned center aligned">
+<div class="ui centered grid">
   <div class="row">
-    <div class="column">
+    <div class="two wide column">
       <form id="formMensagem" class="ui form">
         <div class="field">
           <label>Nome*:</label>
@@ -16,7 +15,7 @@
         </div>
         <div class="field">
           <label>Email*:</label>
-          <input type="text" id="email" name="email" placeholder="nome@provedor.com" required>
+          <input type="text" id="emailForm" name="emailForm" placeholder="nome@provedor.com" required>
         </div>
         <div class="field">
           <label>Telefone*:</label>
@@ -31,13 +30,13 @@
           <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5" required></textarea>
         </div>
         <div>
-          <label>* Campo Obrigatório</label>
+          <label>* Campo Obrigat&oacute;rio</label>
         </div>
         <button id="salvar" class="ui button">Salvar</button>
-        <button id="recuperar" class="ui button">Recuperar</button>
       </form>
+      <button id="recuperar" class="ui button">Recuperar</button>
     </div>
-    <div class="column">
+    <div class="two wide column">
       <div class="field">
         <label>Nome</label>
         <p id="nomeMostra">
@@ -61,43 +60,43 @@
     </div>
   </div>
 </div>
-
 <script>
   $(document).ready(function () {
     $('#tel').mask('(00) 0000-0000');
 
-    $('#nome').blur(function (event) {
-      setP($(this), 'nomeMostra');
+    $('#nome').focusout(function (event) {
+      setP('#nome', '#nomeMostra');
     });
 
-    $('#email').blur(function (event) {
-      if (validarEmail($(this)))
-        setP($(this), 'emailMostra');
+    $('#emailForm').focusout(function (event) {
+      if (validarEmail())
+        setP('#emailForm', '#emailMostra');
     });
 
-    $('#tel').blur(function (event) {
-      if (validarTel($(this)))
-        setP($(this), 'telMostra');
+    $('#tel').focusout(function (event) {
+      if (validarTel())
+        setP('#tel', '#telMostra');
     });
 
-    $('#assunto').blur(function (event) {
-      setP($(this), 'assuntoMostra');
+    $('#assunto').focusout(function (event) {
+      setP('#assunto', '#assuntoMostra');
     });
 
-    $('#mensagem').blur(function (event) {
-      setP($(this), 'mensagemMostra');
+    $('#mensagem').focusout(function (event) {
+      setP('#mensagem', '#mensagemMostra');
     });
 
-    $('#salvar').click(function (event) {
-      if (validaCampos())
+    $('#formMensagem').submit(function (event) {
+      event.preventDefault();
+      if (validaCampos()) {
         salvarCampos();
+        this.submit();
+      }
+
     });
 
     $('#recuperar').click(function (event) {
       recuperarCampos();
     });
   });
-
-
-
 </script>
