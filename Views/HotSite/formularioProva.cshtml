@@ -11,23 +11,23 @@
       <form id="formMensagem" class="ui form">
         <div class="field">
           <label>Nome*:</label>
-          <input type="text" id="nome" name="nome" placeholder="Nome" required>
+          <input type="text" id="nome" name="nome" placeholder="Nome" >
         </div>
         <div class="field">
           <label>Email*:</label>
-          <input type="text" id="emailForm" name="emailForm" placeholder="nome@provedor.com" required>
+          <input type="text" id="emailForm" name="emailForm" placeholder="nome@provedor.com">
         </div>
         <div class="field">
           <label>Telefone*:</label>
-          <input type="text" id="tel" name="tel" placeholder="00 0000-0000" required>
+          <input type="text" id="tel" name="tel" placeholder="00 0000-0000">
         </div>
         <div class="field">
           <label>Assunto*:</label>
-          <input type="text" id="assunto" name="assunto" placeholder="Assunto..." required>
+          <input type="text" id="assunto" name="assunto" placeholder="Assunto...">
         </div>
         <div class="field">
           <label>Mensagem*:</label>
-          <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5" required></textarea>
+          <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5"></textarea>
         </div>
         <div>
           <label>* Campo Obrigat&oacute;rio</label>
@@ -62,20 +62,60 @@
 </div>
 <script>
   $(document).ready(function () {
-    $('#tel').mask('(00) 0000-0000');
+    $('#formMensagem')
+      .form({
+        fields: {
+          nome: {
+            rules: [
+              {
+                type: 'empty'
+              }
+            ]
+          },
+          emailForm: {
+            rules: [
+              {
+                type: 'emailV[{value}]'
+              }
+            ]
+          },
+          tel: {
+            rules:
+              [
+                {
+                  type: 'telephoneV[{value}]'
+                }
+              ]
+          },
+          assunto: {
+            rules: [
+              {
+                type: 'empty'
+              }
+            ]
+          },
+          mensagem: {
+            rules: [
+              {
+                type: 'empty'
+              }
+            ]
+          }
+        }
+      });
+
+    $('#tel').mask('00-0000-0000');
 
     $('#nome').focusout(function (event) {
       setP('#nome', '#nomeMostra');
     });
 
     $('#emailForm').focusout(function (event) {
-      if (validarEmail())
-        setP('#emailForm', '#emailMostra');
+      setP('#emailForm', '#emailMostra');
     });
 
     $('#tel').focusout(function (event) {
-      if (validarTel())
-        setP('#tel', '#telMostra');
+      setP('#tel', '#telMostra');
     });
 
     $('#assunto').focusout(function (event) {
@@ -87,12 +127,16 @@
     });
 
     $('#formMensagem').submit(function (event) {
+      alert("!");
       event.preventDefault();
-      if (validaCampos()) {
+       if ( $('#formMensagem').form('is valid') ) {
         salvarCampos();
         this.submit();
+        return true;
       }
-
+      else {
+        return false;
+      }
     });
 
     $('#recuperar').click(function (event) {
