@@ -1,61 +1,62 @@
 @{
   ViewBag.Title = "Form Prova";
-  <script src="@Url.Content("~/static/js/provaFunctions.js")"></script>
   Layout = "~/Views/Shared/Base/_Layout.cshtml";
 }
 <!-- ~/Views/Shared/Blocks/Banner/_FullBanner.cshtml -->
 @Html.Action("FullBanner", "Banner")
-<div class="ui centered grid">
-  <div class="row">
-    <div class="two wide column">
-      <form id="formMensagem" class="ui form">
-        <div class="field">
-          <label>Nome*:</label>
-          <input type="text" id="nome" name="nome" placeholder="Nome" >
-        </div>
-        <div class="field">
-          <label>Email*:</label>
-          <input type="text" id="emailForm" name="emailForm" placeholder="nome@provedor.com">
-        </div>
-        <div class="field">
-          <label>Telefone*:</label>
-          <input type="text" id="tel" name="tel" placeholder="00 0000-0000">
-        </div>
-        <div class="field">
-          <label>Assunto*:</label>
-          <input type="text" id="assunto" name="assunto" placeholder="Assunto...">
-        </div>
-        <div class="field">
-          <label>Mensagem*:</label>
-          <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5"></textarea>
-        </div>
-        <div>
-          <label>* Campo Obrigat&oacute;rio</label>
-        </div>
-        <button id="salvar" class="ui button">Salvar</button>
-      </form>
-      <button id="recuperar" class="ui button">Recuperar</button>
-    </div>
-    <div class="two wide column">
-      <div class="field">
-        <label>Nome</label>
-        <p id="nomeMostra">
+<div class="ui container">
+  <div class="ui equal width padded grid">
+    <div class="row">
+      <div class="column">
+        <form id="formMensagem" class="ui form">
+          <div class="field">
+            <label>Nome:*</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome">
+          </div>
+          <div class="field">
+            <label>Email:*</label>
+            <input type="text" id="emailForm" name="emailForm" placeholder="nome@provedor.com">
+          </div>
+          <div class="field">
+            <label>Telefone:*</label>
+            <input type="text" id="tel" name="tel" placeholder="00 0000-0000">
+          </div>
+          <div class="field">
+            <label>Assunto:*</label>
+            <input type="text" id="assunto" name="assunto" placeholder="Assunto...">
+          </div>
+          <div class="field">
+            <label>Mensagem:*</label>
+            <textarea id="mensagem" name="mensagem" placeholder="Gostaria de..." rows="5"></textarea>
+          </div>
+          <div>
+            <label>* Campo Obrigat&oacute;rio</label>
+          </div>
+          <button id="salvar" class="ui button">Salvar</button>
+        </form>
+        <button id="recuperar" class="ui button">Recuperar</button>
       </div>
-      <div class="field">
-        <label>Email</label>
-        <p id="emailMostra">
-      </div>
-      <div class="field">
-        <label>Telefone</label>
-        <p id="telMostra">
-      </div>
-      <div class="field">
-        <label>Assunto</label>
-        <p id="assuntoMostra">
-      </div>
-      <div class="field">
-        <label>Mensagem</label>
-        <p id="mensagemMostra">
+      <div class="column">
+        <div class="field">
+          <label>Nome:</label>
+          <p id="nomeMostra">
+        </div>
+        <div class="field">
+          <label>Email:</label>
+          <p id="emailMostra">
+        </div>
+        <div class="field">
+          <label>Telefone:</label>
+          <p id="telMostra">
+        </div>
+        <div class="field">
+          <label>Assunto:</label>
+          <p id="assuntoMostra">
+        </div>
+        <div class="field">
+          <label>Mensagem:</label>
+          <p id="mensagemMostra">
+        </div>
       </div>
     </div>
   </div>
@@ -128,7 +129,7 @@
 
     $('#formMensagem').submit(function (event) {
       event.preventDefault();
-       if ( $('#formMensagem').form('is valid') ) {
+      if ($('#formMensagem').form('is valid')) {
         salvarCampos();
         this.submit();
         return true;
@@ -142,4 +143,37 @@
       recuperarCampos();
     });
   });
+
+  function setP(field, pId) {
+    $(pId).html($(field).val());
+  }
+
+  function salvarCampos() {
+    var formObj = {};
+    formObj.nome = $("#nome").val();
+    formObj.email = $("#emailForm").val();
+    formObj.tel = $("#tel").val();
+    formObj.assunto = $("#assunto").val();
+    formObj.mensagem = $("#mensagem").val();
+
+    sessionStorage.setItem("formMessage", JSON.stringify(formObj));
+  }
+
+  function recuperarCampos() {
+    var json = sessionStorage.getItem("formMessage");
+    var formObj = JSON.parse(json);
+
+    $("#nome").val(formObj.nome);
+    $("#emailForm").val(formObj.email);
+    $("#tel").val(formObj.tel);
+    $("#assunto").val(formObj.assunto);
+    $("#mensagem").val(formObj.mensagem);
+
+    $("#nomeMostra").html(formObj.nome);
+    $("#emailMostra").html(formObj.email);
+    $("#telMostra").html(formObj.tel);
+    $("#assuntoMostra").html(formObj.assunto);
+    $("#mensagemMostra").html(formObj.mensagem);
+  }
+
 </script>
