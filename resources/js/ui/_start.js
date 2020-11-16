@@ -5,6 +5,9 @@
 require('../vendors/validators');
 //--------------------[ Correios ]--------------------//
 require('../functions/correios');
+
+require('../functions/prova');
+
 //--------------------[ Form Starters ]--------------------//
 require('./starters/formManipulation');
 //--------------------[ Menu ]--------------------//
